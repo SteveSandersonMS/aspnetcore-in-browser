@@ -186,8 +186,13 @@ async function runDotNet(callbackWhenServerListening) {
         return new File(await (await (await fetch(path)).blob()).arrayBuffer());
     }
 
+    // Assume the service worker URL determines the pathbase for the application
+    // e.g., if the service worker is at /service-worker.js, then pathbase is empty
+    // e.g., if the service worker is at /my-site/service-worker.js, then pathbase is /my-site
+    const aspNetPathBase = self.location.pathname.substring(0, self.location.pathname.lastIndexOf('/'));
+
     let args = ["dotnet"];
-    let env = [/*"NAME=value"*/];
+    let env = [`ASPNETCORE_APPL_PATH=${aspNetPathBase}`];
     let fds = [
         new Stdio(),
         new Stdio(),
