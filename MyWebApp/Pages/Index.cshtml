@@ -1,0 +1,21 @@
+﻿@page
+@{
+    ViewData["Title"] = "Hello!";
+}
+
+<h1>Welcome!</h1>
+
+<p>
+    This is ASP.NET Core (server) built as a WASI module, <b>running directly in your browser</b>.
+    The server time is @DateTime.Now.ToLongTimeString().
+</p>
+
+<p>
+    See also:
+    <ul>
+        <li><a asp-page="Todo">todo list as HTML form</a></li>
+        <li><a href="/api/todos">todo list as JSON API</a></li>
+    </ul>
+</p>
+
+<img src="logo.png" width="300" />

@@ -1,0 +1,47 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Loading...</title>
+  <base href="/" />
+</head>
+
+<body>
+    <h1>Starting ASP.NET Core server...</h1>
+    <p id="latest-action"></p>
+    <progress id="progress-bar" max="1"></progress>
+</body>
+
+<script>
+    const progressBar = document.getElementById('progress-bar');
+    const statusText = document.getElementById('latest-action');
+    navigator.serviceWorker.addEventListener('message', event => {
+      switch (event.data.action) {
+        case 'serverReady':
+          location.reload();
+          break;
+        case 'fetchingApplication':
+          statusText.textContent = 'Fetching application...';
+          break;
+        case 'loadProgress':
+          progressBar.setAttribute('value', event.data.loaded);
+          progressBar.setAttribute('max', event.data.total);
+          statusText.textContent = `Loaded ${ Math.round(100 * event.data.loaded / event.data.total) }%`;
+          break;
+        case 'serverStarting':
+          statusText.textContent = 'Starting...';
+        default:
+          progressBar.removeAttribute('value');
+      }
+    });
+    
+    (async () => {
+      const registration = await navigator.serviceWorker.register('service-worker.js');
+      const readyResult = await navigator.serviceWorker.ready;
+      registration.active?.postMessage({ action: 'startDotNet' });
+    })();
+</script>
+
+</html>
