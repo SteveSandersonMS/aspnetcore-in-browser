@@ -1,7 +1,6 @@
 using MyWebApp.Models;
-using Wasi.AspNetCore.Server.CustomHost;
 
-var builder = WebApplication.CreateBuilder(args).UseWasiCustomHostServer();
+var builder = WebApplication.CreateBuilder(args).UseWasiConnectionListener();
 builder.Services.AddRazorPages();
 builder.Services.AddSingleton<ITodoList, InMemoryTodoList>();
 
