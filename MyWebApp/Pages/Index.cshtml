@@ -1,4 +1,5 @@
 ﻿@page
+@using System.Runtime.InteropServices
 @{
     ViewData["Title"] = "Hello!";
 }
@@ -6,8 +7,7 @@
 <h1>Welcome!</h1>
 
 <p>
-    This is ASP.NET Core (server) built as a WASI module, <b>running directly in your browser</b>.
-    It will share state across concurrent tabs within your browser.
+    This is ASP.NET Core (server) running on <strong>@RuntimeInformation.OSArchitecture</strong>.
     The time is @DateTime.Now.ToLongTimeString().
 </p>
 
@@ -17,12 +17,6 @@
         <li><a asp-page="Todo">todo list as HTML form</a></li>
         <li><a href="~/api/todos">todo list as JSON API</a></li>
     </ul>
-</p>
-
-<p class="warning">
-    <strong>Caution: Don't actually do this!</strong>
-    It's purely to demonstrate that ASP.NET Core on WebAssembly can run anywhere. It's <em>not</em> a sensible
-    way to deliver a normal web app.
 </p>
 
 <img src="logo.png" alt="WASI logo" width="300" />
